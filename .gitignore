@@ -1,15 +1,12 @@
-# Terraform state files
-.terraform/
-terraform.tfstate
-terraform.tfstate.backup
-.terraform.lock.hcl
-
-# SSH / Keys
+# Keys
 *.pem
 *.pub
-*.key
 terra-key
 terra-key.pub
 
-# VSCode settings (optional)
-.vscode/
+# Terraform state
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+.terraform.lock.hcl
+crash.log
