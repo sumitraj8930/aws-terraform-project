@@ -1,90 +1,114 @@
 # 🚀 **Terraform AWS EC2 Deployment**
 
-This project provisions an **EC2 instance on AWS using Terraform**, and automatically installs **Nginx** via `user_data` script.  
-It demonstrates practical **Infrastructure as Code (IaC)** concepts with variables, outputs, and resource dependencies.
+This project uses Terraform to provision an EC2 instance on AWS and automatically installs Nginx, Docker, and Kubernetes tools using a user_data bootstrap script. It demonstrates practical Infrastructure as Code (IaC) with reusable variables, outputs, and secure resource management.
 
----
+✨ Features
 
-## ✨ **Features**
+✔ Provision EC2 using Terraform
+✔ Secure SSH Key Pair for remote access
+✔ VPC + Security Group configuration
+✔ Automated server bootstrap via install.sh
+✔ Installs:
 
-- 🏗️ EC2 provisioning using Terraform
-- 🔐 SSH Key Pair for secure access
-- 🌐 Default VPC + Security Group rules
-- 📦 Automatic Nginx installation via `install_nginx.sh`
-- 🔰 Allows inbound:
-  - SSH (22)
-  - HTTP (80)
-  - Custom App (8000)
-- 🧩 Variables for configuration flexibility
-- 📤 Outputs for public IP / DNS
-- 🧹 Git ignored sensitive & state files
+Nginx
 
----
+Docker
 
-## 🧰 **Tech Used**
+kubectl + eksctl (for EKS workloads)
 
-- Terraform 🏗️
-- AWS EC2 ☁
-- AWS VPC 🌐
-- Nginx 🌐
+✔ Allows inbound:
 
----
+SSH (22)
 
-## 📁 **Project Structure**
+HTTP (80)
 
+Custom Application (8000)
+
+✔ Variables for flexibility and reuse
+✔ Outputs for EC2 Public IP / DNS
+✔ Sensitive files excluded via .gitignore
+
+🧰 Tech Stack Used
+Component	Purpose
+Terraform	IaC provisioning
+AWS EC2	Compute server
+AWS VPC	Networking
+Nginx	Web server
+Docker	Container runtime
+kubectl + eksctl	Kubernetes tooling
+Linux	Server OS
+📁 Project Structure
 .
 ├── ec2.tf
 ├── provider.tf
 ├── variables.tf
 ├── outputs.tf
-├── install_nginx.sh
+├── install.sh
 └── .gitignore
 
+🧩 Variables
 
----
+Variables are defined in variables.tf for:
 
-## 🧩 **Variables**
+AMI ID
 
-Defined in `variables.tf` and used for:
+Instance Type
 
-- AMI ID
-- Instance Type
-- Root Volume Size
+Root Volume Size
 
-Helps make configuration reusable and environment-friendly.
+This makes the deployment customizable, reusable, and environment-friendly.
 
----
+📤 Outputs
 
-## 📤 **Outputs**
+After deployment, Terraform prints:
 
-Terraform prints useful instance details after deployment:
+Public IP
 
-- Public IP
-- Public DNS
-- Private IP
+Public DNS
 
-Useful for SSH access and testing Nginx.
+Private IP
 
----
+Useful for:
 
-## 🌐 **Nginx Installation**
+✔ SSH
+✔ Testing Nginx
+✔ Verifying deployment
 
-Nginx is installed automatically using Terraform `user_data`:
+🖥️ Bootstrap Script
 
-```bash
-user_data = file("install_nginx.sh")
-The script runs on first boot and configures a basic HTTP server.
+Nginx, Docker, and Kubernetes tools are installed automatically using:
 
-📜 Terraform Commands
-terraform init
-terraform plan
-terraform apply
-terraform destroy
-🔐 Security
-Ignored files include:
+user_data = file("install.sh")
+
+
+Enables zero-touch provisioning and prepares the instance for containerized + Kubernetes workloads.
+
+🔐 Security & State Handling
+
+.gitignore excludes:
 
 terra-key
 terraform.tfstate
 terraform.tfstate.backup
 .terraform/
-Prevents leaking sensitive data and state
+
+
+Prevents accidental exposure of:
+
+✔ sensitive keys
+✔ Terraform state
+✔ backend metadata
+
+🧪 Terraform Workflow
+terraform init
+terraform plan
+terraform apply
+terraform destroy
+
+🎯 Use Cases
+
+✔ Learning Terraform + AWS
+✔ DevOps bootstrapping
+✔ Nginx deployment automation
+✔ EKS tooling environment
+✔ IaC + cloud provisioning practice
