@@ -1,12 +1,14 @@
 # 🚀 **Terraform AWS EC2 Deployment**
 
-This project provisions an AWS EC2 instance using Terraform (IaC) and automatically bootstraps the server with Nginx, Docker, kubectl, and eksctl using a cloud-init (install.sh) script. It demonstrates practical DevOps automation for infrastructure provisioning, environment setup, and reusable configurations.
+This project provisions an AWS EC2 instance using Terraform (IaC) and automatically bootstraps a Linux environment with Nginx, Docker, kubectl, and eksctl using install.sh. It demonstrates practical DevOps automation for infrastructure provisioning and cloud-native environment setup.
 
 ✨ Key Features
 
-✔ Provision AWS EC2 instance with Terraform
-✔ Automated Linux bootstrap via user_data
-✔ Installs tools for cloud-native workloads:
+Provision AWS EC2 instance using Terraform
+
+Automated Linux bootstrap via user_data
+
+Installs tools for cloud-native workloads:
 
 Nginx (Web server)
 
@@ -16,8 +18,9 @@ kubectl (Kubernetes CLI)
 
 eksctl (EKS CLI)
 
-✔ SSH key pair for secure access
-✔ Security group with inbound:
+SSH key pair for secure access
+
+Security group inbound rules:
 
 SSH (22)
 
@@ -25,19 +28,21 @@ HTTP (80)
 
 App Port (8000)
 
-✔ Reusable variables for flexibility
-✔ Helpful outputs for Public IP / DNS
-✔ Sensitive assets excluded via .gitignore
+Reusable variables for configuration flexibility
+
+Helpful outputs for Public IP / DNS
+
+Sensitive state & secrets excluded via .gitignore
 
 🧰 Tech Stack
-Component	Role
+Tool	Purpose
 Terraform	Infrastructure as Code
 AWS EC2	Compute
 AWS VPC	Networking
 Nginx	Web server
-Docker	Containers
+Docker	Container runtime
 kubectl / eksctl	Kubernetes tooling
-Linux	OS environment
+Linux	Host OS
 📂 Project Structure
 .
 ├── ec2.tf
@@ -52,37 +57,37 @@ Infrastructure Layer
 
 Terraform provisions:
 
-EC2 Instance
+EC2 instance
 
 VPC networking
 
-Security rules
+Security groups
 
-SSH keys
+SSH key pair
 
 IAM access
 
-Resource tagging
+Resource tagging (recommended)
 
 Bootstrap Layer
 
-install.sh automates:
+install.sh:
 
-Package updates
+Updates packages
 
-Nginx installation
+Installs Nginx
 
-Docker setup
+Installs Docker
 
-Kubernetes tooling setup
+Installs Kubernetes tooling
 
-Service enablement
+Enables system services
 
-This enables zero-touch server setup with DevOps tooling installed.
+Results in zero-touch deployment ready for container workloads and EKS labs.
 
 🧩 Variables
 
-Configured via variables.tf for:
+Defined in variables.tf for:
 
 AMI ID
 
@@ -90,11 +95,11 @@ Instance type
 
 Root volume size
 
-Allows easy customization for environments (dev / test / training).
+Supports reusability across dev/test environments.
 
 📤 Outputs
 
-Terraform prints:
+After deployment Terraform prints:
 
 Public IP
 
@@ -103,21 +108,24 @@ Public DNS
 Private IP
 
 Useful for:
-✔ SSH access
-✔ HTTP testing
-✔ Nginx validation
 
-🚀 Deployment Commands
+SSH access
+
+Web testing
+
+Tool validation
+
+🧪 Terraform Workflow
 terraform init
 terraform plan
 terraform apply
 
 
-To destroy resources:
+Destroy resources:
 
 terraform destroy
 
-🔐 Security & State
+🔐 Security & State Handling
 
 .gitignore excludes:
 
@@ -127,7 +135,10 @@ terraform.tfstate.backup
 .terraform/
 
 
-Prevents leaking:
-✔ SSH keys
-✔ Terraform state
-✔ Metadata
+Prevents exposure of:
+
+Private keys
+
+State metadata
+
+Backend state files
