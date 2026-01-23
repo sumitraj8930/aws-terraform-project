@@ -1,43 +1,44 @@
 # 🚀 **Terraform AWS EC2 Deployment**
 
-This project uses Terraform to provision an EC2 instance on AWS and automatically installs Nginx, Docker, and Kubernetes tools using a user_data bootstrap script. It demonstrates practical Infrastructure as Code (IaC) with reusable variables, outputs, and secure resource management.
+This project provisions an AWS EC2 instance using Terraform (IaC) and automatically bootstraps the server with Nginx, Docker, kubectl, and eksctl using a cloud-init (install.sh) script. It demonstrates practical DevOps automation for infrastructure provisioning, environment setup, and reusable configurations.
 
-✨ Features
+✨ Key Features
 
-✔ Provision EC2 using Terraform
-✔ Secure SSH Key Pair for remote access
-✔ VPC + Security Group configuration
-✔ Automated server bootstrap via install.sh
-✔ Installs:
+✔ Provision AWS EC2 instance with Terraform
+✔ Automated Linux bootstrap via user_data
+✔ Installs tools for cloud-native workloads:
 
-Nginx
+Nginx (Web server)
 
-Docker
+Docker (Container runtime)
 
-kubectl + eksctl (for EKS workloads)
+kubectl (Kubernetes CLI)
 
-✔ Allows inbound:
+eksctl (EKS CLI)
+
+✔ SSH key pair for secure access
+✔ Security group with inbound:
 
 SSH (22)
 
 HTTP (80)
 
-Custom Application (8000)
+App Port (8000)
 
-✔ Variables for flexibility and reuse
-✔ Outputs for EC2 Public IP / DNS
-✔ Sensitive files excluded via .gitignore
+✔ Reusable variables for flexibility
+✔ Helpful outputs for Public IP / DNS
+✔ Sensitive assets excluded via .gitignore
 
-🧰 Tech Stack Used
-Component	Purpose
-Terraform	IaC provisioning
-AWS EC2	Compute server
+🧰 Tech Stack
+Component	Role
+Terraform	Infrastructure as Code
+AWS EC2	Compute
 AWS VPC	Networking
 Nginx	Web server
-Docker	Container runtime
-kubectl + eksctl	Kubernetes tooling
-Linux	Server OS
-📁 Project Structure
+Docker	Containers
+kubectl / eksctl	Kubernetes tooling
+Linux	OS environment
+📂 Project Structure
 .
 ├── ec2.tf
 ├── provider.tf
@@ -46,21 +47,54 @@ Linux	Server OS
 ├── install.sh
 └── .gitignore
 
+⚙️ How It Works
+Infrastructure Layer
+
+Terraform provisions:
+
+EC2 Instance
+
+VPC networking
+
+Security rules
+
+SSH keys
+
+IAM access
+
+Resource tagging
+
+Bootstrap Layer
+
+install.sh automates:
+
+Package updates
+
+Nginx installation
+
+Docker setup
+
+Kubernetes tooling setup
+
+Service enablement
+
+This enables zero-touch server setup with DevOps tooling installed.
+
 🧩 Variables
 
-Variables are defined in variables.tf for:
+Configured via variables.tf for:
 
 AMI ID
 
-Instance Type
+Instance type
 
-Root Volume Size
+Root volume size
 
-This makes the deployment customizable, reusable, and environment-friendly.
+Allows easy customization for environments (dev / test / training).
 
 📤 Outputs
 
-After deployment, Terraform prints:
+Terraform prints:
 
 Public IP
 
@@ -69,21 +103,21 @@ Public DNS
 Private IP
 
 Useful for:
+✔ SSH access
+✔ HTTP testing
+✔ Nginx validation
 
-✔ SSH
-✔ Testing Nginx
-✔ Verifying deployment
-
-🖥️ Bootstrap Script
-
-Nginx, Docker, and Kubernetes tools are installed automatically using:
-
-user_data = file("install.sh")
+🚀 Deployment Commands
+terraform init
+terraform plan
+terraform apply
 
 
-Enables zero-touch provisioning and prepares the instance for containerized + Kubernetes workloads.
+To destroy resources:
 
-🔐 Security & State Handling
+terraform destroy
+
+🔐 Security & State
 
 .gitignore excludes:
 
@@ -93,22 +127,7 @@ terraform.tfstate.backup
 .terraform/
 
 
-Prevents accidental exposure of:
-
-✔ sensitive keys
+Prevents leaking:
+✔ SSH keys
 ✔ Terraform state
-✔ backend metadata
-
-🧪 Terraform Workflow
-terraform init
-terraform plan
-terraform apply
-terraform destroy
-
-🎯 Use Cases
-
-✔ Learning Terraform + AWS
-✔ DevOps bootstrapping
-✔ Nginx deployment automation
-✔ EKS tooling environment
-✔ IaC + cloud provisioning practice
+✔ Metadata
