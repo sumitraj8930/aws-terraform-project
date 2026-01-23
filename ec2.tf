@@ -62,7 +62,7 @@ resource "aws_instance" "my_instance" {
   key_name        = aws_key_pair.my_key.key_name
   security_groups = [aws_security_group.my_security_group.name]
 
-  user_data = file("install_nginx.sh")
+  user_data = file("install.sh")
 
   root_block_device {
     volume_size = var.ec2_root_storage_size
