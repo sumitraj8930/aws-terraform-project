@@ -1,49 +1,49 @@
-# 🚀 **Terraform AWS EC2 Deployment**
 
-This project provisions an AWS EC2 instance using Terraform (IaC) and automatically bootstraps a Linux environment with Nginx, Docker, kubectl, and eksctl using install.sh. It demonstrates practical DevOps automation for infrastructure provisioning and cloud-native environment setup.
+# 🚀 **Terraform — AWS EC2 Deployment**
 
-✨ Key Features
+This project provisions an AWS EC2 instance using **Terraform (IaC)** and automatically bootstraps a Linux environment with **Nginx, Docker, kubectl, and eksctl** using `install.sh`. It demonstrates practical DevOps automation for infrastructure provisioning and cloud-native environment setup.
 
-Provision AWS EC2 instance using Terraform
+---
 
-Automated Linux bootstrap via user_data
+## ✨ **Key Features**
 
-Installs tools for cloud-native workloads:
+* Provision AWS EC2 instance using Terraform
+* Automated Linux bootstrap via `user_data`
+* Installs tools for cloud-native workloads:
 
-Nginx (Web server)
+  * Nginx (Web server)
+  * Docker (Container runtime)
+  * kubectl (Kubernetes CLI)
+  * eksctl (EKS CLI)
+* SSH key pair for secure access
+* Security group inbound rules:
 
-Docker (Container runtime)
+  * SSH (22)
+  * HTTP (80)
+  * App Port (8000)
+* Reusable variables for configuration flexibility
+* Helpful outputs for Public IP / DNS
+* Sensitive state & secrets excluded via `.gitignore`
 
-kubectl (Kubernetes CLI)
+---
 
-eksctl (EKS CLI)
+## 🧰 **Tech Stack**
 
-SSH key pair for secure access
+| Tool             | Purpose                |
+| ---------------- | ---------------------- |
+| Terraform        | Infrastructure as Code |
+| AWS EC2          | Compute                |
+| AWS VPC          | Networking             |
+| Nginx            | Web server             |
+| Docker           | Container runtime      |
+| kubectl / eksctl | Kubernetes tooling     |
+| Linux            | Host OS                |
 
-Security group inbound rules:
+---
 
-SSH (22)
+## 📂 **Project Structure**
 
-HTTP (80)
-
-App Port (8000)
-
-Reusable variables for configuration flexibility
-
-Helpful outputs for Public IP / DNS
-
-Sensitive state & secrets excluded via .gitignore
-
-🧰 Tech Stack
-Tool	Purpose
-Terraform	Infrastructure as Code
-AWS EC2	Compute
-AWS VPC	Networking
-Nginx	Web server
-Docker	Container runtime
-kubectl / eksctl	Kubernetes tooling
-Linux	Host OS
-📂 Project Structure
+```
 .
 ├── ec2.tf
 ├── provider.tf
@@ -51,94 +51,100 @@ Linux	Host OS
 ├── outputs.tf
 ├── install.sh
 └── .gitignore
+```
 
-⚙️ How It Works
-Infrastructure Layer
+---
+
+## ⚙️ **How It Works**
+
+### **Infrastructure Layer**
 
 Terraform provisions:
 
-EC2 instance
+* EC2 instance
+* VPC networking
+* Security groups
+* SSH key pair
+* IAM access
+* Resource tagging (recommended)
 
-VPC networking
+### **Bootstrap Layer**
 
-Security groups
+`install.sh`:
 
-SSH key pair
+* Updates packages
+* Installs Nginx
+* Installs Docker
+* Installs Kubernetes tooling
+* Enables system services
 
-IAM access
+Results in **zero-touch deployment** ready for container workloads and EKS labs.
 
-Resource tagging (recommended)
+---
 
-Bootstrap Layer
+## 🧩 **Variables**
 
-install.sh:
+Defined in `variables.tf` for:
 
-Updates packages
-
-Installs Nginx
-
-Installs Docker
-
-Installs Kubernetes tooling
-
-Enables system services
-
-Results in zero-touch deployment ready for container workloads and EKS labs.
-
-🧩 Variables
-
-Defined in variables.tf for:
-
-AMI ID
-
-Instance type
-
-Root volume size
+* AMI ID
+* Instance type
+* Root volume size
 
 Supports reusability across dev/test environments.
 
-📤 Outputs
+---
+
+## 📤 **Outputs**
 
 After deployment Terraform prints:
 
-Public IP
-
-Public DNS
-
-Private IP
+* Public IP
+* Public DNS
+* Private IP
 
 Useful for:
 
-SSH access
+* SSH access
+* Web testing
+* Tool validation
 
-Web testing
+---
 
-Tool validation
+## 🧪 **Terraform Workflow**
 
-🧪 Terraform Workflow
+```sh
 terraform init
 terraform plan
 terraform apply
-
+```
 
 Destroy resources:
 
+```sh
 terraform destroy
+```
 
-🔐 Security & State Handling
+---
 
-.gitignore excludes:
+## 🔐 **Security & State Handling**
 
+`.gitignore` excludes:
+
+```
 terra-key
 terraform.tfstate
 terraform.tfstate.backup
 .terraform/
-
+```
 
 Prevents exposure of:
 
-Private keys
+* Private keys
+* State metadata
+* Backend state files
 
-State metadata
+---
 
-Backend state files
+
+
+
